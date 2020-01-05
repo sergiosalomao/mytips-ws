@@ -9,9 +9,16 @@ use App\Tip;
 class TipController extends Controller
 {
     
-    public function index()
+    public function index(Request $request,Tip $tips)
     {
-        $dados = Tip::get();
+        $dados = $tips->newQuery();
+        
+        if ($request->filled('categoria'))  $dados->whereIn('categoria_id',  $request->categoria);
+        if ($request->filled('titulo'))  $dados->where('titulo', 'like', '%' . $request->titulo . '%');
+        if ($request->filled('descricao'))  $dados->where('descricao', 'like', '%' . $request->descricao . '%');
+
+        $dados = $dados->with(['categoria'])->orderBy('id', 'asc')->get();
+      
         return response()->json($dados,200);
     }
 

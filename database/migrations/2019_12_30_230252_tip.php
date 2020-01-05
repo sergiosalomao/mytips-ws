@@ -16,7 +16,7 @@ class Tip extends Migration
         Schema::create('tips', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('titulo');
-            $table->string('descricao');
+            $table->text('descricao');
             $table->unsignedBigInteger('categoria_id');
             $table->foreign('categoria_id')->references('id')->on('categorias');
             $table->timestamps();
